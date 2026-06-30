@@ -104,6 +104,19 @@
     <script>
         // Saat halaman dimuat, cek status session ke server Node.js
         document.addEventListener("DOMContentLoaded", function () {
+            // Cek status aktif game
+            fetch('/api/game-status/2')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success' && data.status_aktif === 0) {
+                        const orderGrid = document.querySelector('.order-grid');
+                        if (orderGrid) {
+                            orderGrid.innerHTML = '<div style="text-align: center; padding: 50px; background: rgba(255, 0, 0, 0.1); border-radius: 10px; margin: 20px 0;"><h2 style="color: #ff2a3f;">⛔ Top Up Game Sedang Tutup ⛔</h2><p style="color: white; margin-top: 10px;">Mohon maaf, layanan top up untuk game ini sedang tidak tersedia saat ini.</p></div>';
+                        }
+                    }
+                })
+                .catch(err => console.error('Error fetching game status:', err));
+
             let isLoggedIn = false;
             fetch('/api/check-session')
                 .then(response => response.json())

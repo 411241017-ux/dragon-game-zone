@@ -125,18 +125,30 @@ app.post('/api/transaksi', (req, res) => {
         return res.status(401).json({ status: 'error', message: 'Unauthorized. Harap login terlebih dahulu.' });
     }
 
-    const { total_amount, metode_pembayaran, input_user1, input_user2 } = req.body;
+    const { total_amount, metode_pembayaran, input_user1, input_user2, id_produk } = req.body;
     const id_user = req.session.id_user;
     
-    const query = 'INSERT INTO transaksi (id_user, input_user1, input_user2, total_amount, metode_pembayaran, status) VALUES (?, ?, ?, ?, ?, ?)';
-    db.query(query, [id_user, input_user1, input_user2, total_amount, metode_pembayaran, 'Berhasil'], (err, result) => {
+    const query = 'INSERT INTO transaksi (id_user, id_produk, input_user1, input_user2, total_amount, metode_pembayaran, status) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    db.query(query, [id_user, id_produk || null, input_user1, input_user2, total_amount, metode_pembayaran, 'Berhasil'], (err, result) => {
         if (err) return res.status(500).json({ status: 'error', message: err.message || err.code || String(err) });
         
         res.json({ status: 'success', message: 'Transaksi berhasil disimpan!' });
     });
 });
 
-// 7. TEST KONEKSI DATABASE (Untuk Debugging)
+// 7. AMBIL STATUS GAME
+app.get('/api/game-status/:id', (req, res) => {
+    const id_game = req.params.id;
+    db.query('SELECT status_aktif FROM game WHERE id_game = ?', [id_game], (err, results) => {
+        if (err) return res.status(500).json({ status: 'error', message: err.message || err.code || String(err) });
+        if (results.length === 0) {
+            return res.status(404).json({ status: 'error', message: 'Game tidak ditemukan!' });
+        }
+        res.json({ status: 'success', status_aktif: results[0].status_aktif });
+    });
+});
+
+// 8. TEST KONEKSI DATABASE (Untuk Debugging)
 app.get('/api/test-db', (req, res) => {
     db.query('SELECT 1 + 1 AS solution', (err, results) => {
         if (err) {
