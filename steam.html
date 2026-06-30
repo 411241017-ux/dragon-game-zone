@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Steam Wallet - DragonGameZone</title>
+    <link rel="stylesheet" href="steam.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="websitegame.html" style="text-decoration: none; color: inherit;">DragonGameZone</a>
+        </div>
+    
+        <div class="auth-buttons">
+            <a href="login.html" class="btn-login">Masuk</a>
+            <a href="register.html" class="btn-register">Daftar</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="product-header">
+            <img src="images/steam.jpg" alt="Steam Logo" class="game-logo">
+            <div class="game-info">
+                <h1>Steam Wallet</h1>
+                <p>Top up Steam Wallet IDR Code instan, murah, dan aman!</p>
+            </div>
+        </div>
+
+        <div class="order-grid">
+            <section class="order-section">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Lengkapi Data Akun</h3>
+                    <div class="input-group">
+                        <input type="text" placeholder="Masukkan Email atau Nomor HP" required>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Pilih Nominal Wallet</h3>
+                    <div class="item-grid">
+                        <div class="item-option">
+                            <img src="images/promosteam.png" alt="12K">
+                            <span>IDR 12,000 Wallet</span>
+                            <small>Rp 15.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/promosteam.png" alt="45K">
+                            <span>IDR 45,000 Wallet</span>
+                            <small>Rp 58.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/promosteam.png" alt="90K">
+                            <span>IDR 90,000 Wallet</span>
+                            <small>Rp 115.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/promosteam.png" alt="250K">
+                            <span>IDR 250,000 Wallet</span>
+                            <small>Rp 310.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/promosteam.png" alt="400K">
+                            <span>IDR 400,000 Wallet</span>
+                            <small>Rp 490.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/promosteam.png" alt="600K">
+                            <span>IDR 600,000 Wallet</span>
+                            <small>Rp 735.000</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="payment-section">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Metode Pembayaran</h3>
+                    <select style="width: 100%; margin-top: 15px;">
+                        <option value="">Pilih Metode Pembayaran</option>
+                        <option value="dana">DANA</option>
+                        <option value="qris">QRIS / All E-Wallet</option>
+                        <option value="gopay">GoPay</option>
+                        <option value="shopeepay">ShopeePay</option>
+                    </select>
+                    <button class="btn-checkout" style="margin-top: 20px;">Bayar Sekarang</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 DragonGameStation Indonesia. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Saat halaman dimuat, cek status session ke server Node.js
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('/api/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    const authButtons = document.querySelector('.auth-buttons');
+                    
+                    if (data.loggedIn && authButtons) {
+                        // Jika sudah login, ganti tombol dengan Nama User & Logout
+                        authButtons.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <span style="font-weight: bold; color: white;">👋 Halo, ${data.nama}</span>
+                                <button id="btnLogout" class="btn-logout" style="background-color: var(--theme-color, var(--val-red)); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold;">Log out</button>
+                            </div>
+                        `;
+
+                        // Fungsi tombol logout
+                        document.getElementById('btnLogout').addEventListener('click', function() {
+                            fetch('/api/logout')
+                                .then(res => res.json())
+                                .then(result => {
+                                    if(result.status === 'success') {
+                                        alert('Berhasil keluar!');
+                                        window.location.reload(); // Refresh halaman
+                                    }
+                                });
+                        });
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

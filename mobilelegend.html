@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Mobile Legends - DragonGameZone</title>
+    <link rel="stylesheet" href="mobilelegend.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="websitegame.html" style="text-decoration: none; color: inherit;">DragonGameZone</a>
+        </div>
+    
+        <div class="auth-buttons">
+            <a href="login.html" class="btn-login" style="margin-right: 10px;">Masuk</a>
+            <a href="register.html" class="btn-register">Daftar</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="product-header">
+            <img src="images/mobilelegends.jpg" alt="Mobile Legends Logo" class="game-logo">
+            <div class="game-info">
+                <h1>Mobile Legends</h1>
+                <p>Top up Diamonds Mobile Legends instan, murah, dan aman!</p>
+            </div>
+        </div>
+
+        <div class="order-grid">
+            <section class="order-section">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Lengkapi Data Akun</h3>
+                    <div class="input-group">
+                        <input type="text" placeholder="Masukkan User ID" required>
+                        <input type="text" placeholder="Masukkan Zone ID" required>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Pilih Nominal Diamonds</h3>
+                    <div class="item-grid">
+                        <div class="item-option">
+                            <img src="images/diamondml.png" alt="5 Dm">
+                            <span>5 Diamonds</span>
+                            <small>Rp 1.500</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/diamondml.png" alt="11 Dm">
+                            <span>11 Diamonds</span>
+                            <small>Rp 3.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/diamondml.png" alt="50 Dm">
+                            <span>50 Diamonds</span>
+                            <small>Rp 14.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/diamondml.png" alt="250 Dm">
+                            <span>250 Diamonds</span>
+                            <small>Rp 70.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/diamondml.png" alt="500 Dm">
+                            <span>500 Diamonds</span>
+                            <small>Rp 140.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/diamondml.png" alt="1000 Dm">
+                            <span>1000 Diamonds</span>
+                            <small>Rp 280.000</small>
+                        </div>
+                        <div class="item-option">
+                            <img src="images/diamondml.png" alt="5000 Dm">
+                            <span>5000 Diamonds</span>
+                            <small>Rp 1.400.000</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="payment-section">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Metode Pembayaran</h3>
+                    <select style="width: 100%; margin-top: 15px;">
+                        <option value="">Pilih Metode Pembayaran</option>
+                        <option value="dana">DANA</option>
+                        <option value="qris">QRIS / All E-Wallet</option>
+                        <option value="gopay">GoPay</option>
+                        <option value="shopeepay">ShopeePay</option>
+                    </select>
+                    <button class="btn-checkout" style="margin-top: 20px;">Bayar Sekarang</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 DragonGameStation Indonesia. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Saat halaman dimuat, cek status session ke server Node.js
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('/api/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    const authButtons = document.querySelector('.auth-buttons');
+                    
+                    if (data.loggedIn && authButtons) {
+                        // Jika sudah login, ganti tombol dengan Nama User & Logout
+                        authButtons.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <span style="font-weight: bold; color: white;">👋 Halo, ${data.nama}</span>
+                                <button id="btnLogout" style="background-color: var(--theme-color, var(--val-red)); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold;">Log out</button>
+                            </div>
+                        `;
+
+                        // Fungsi tombol logout
+                        document.getElementById('btnLogout').addEventListener('click', function() {
+                            fetch('/api/logout')
+                                .then(res => res.json())
+                                .then(result => {
+                                    if(result.status === 'success') {
+                                        alert('Berhasil keluar!');
+                                        window.location.reload(); // Refresh halaman
+                                    }
+                                });
+                        });
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff4757;
+}
+
+.search-bar input {
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.btn-login {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.btn-register {
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+    margin: 20px auto;
+    width: 90%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.slider-wrapper {
+    display: flex;
+    transition: transform 0.8s ease-in-out;
+    width: 100%;
+}
+
+.slider-wrapper img {
+    min-width: 100%;
+    display: block;
+}
+
+/* Container & Grid */
+.container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #2f3542;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+/* Card Style */
+.product-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.product-card h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.product-card p {
+    font-size: 14px;
+    color: #747d8c;
+    margin-bottom: 15px;
+}
+
+.btn-buy {
+    text-decoration: none;
+    background-color: #2f3542;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: block;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+.btn-buy:hover {
+    background-color: #ff4757;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px;
+    color: #747d8c;
+}
+
+/* Tampilan nama user dan Tombol Log out */
+
+.user-logged {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.user-name {
+    font-weight: bold;
+    color: #2f3542;
+}
+.btn-logout {
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.btn-logout:hover {
+    background-color: #ff2a3f;
+}
+
+/* --- MOBILE RESPONSIVENESS FIX --- */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    .search-bar {
+        width: 100%;
+    }
+    .search-bar input {
+        width: 100%;
+    }
+    .auth-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+}

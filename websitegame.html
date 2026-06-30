@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DragonGameZone- Top Up Cepat & Termurah di indonesia</title>
+    <link rel="stylesheet" href="./websitegame.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">DragonGameZone</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Cari game favoritmu...">
+        </div>
+        
+        <div class="auth-buttons">
+            <a href="login.html" class="btn-login" style="text-decoration: none; color: #2f3542; margin-right: 10px;">Masuk</a>
+            <a href="register.html" class="btn-register" style="text-decoration: none; display: inline-block;">Daftar</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="slider-wrapper" id="promoSlider">
+            <img src="images/valorantpromo.png" alt="Promo Voucher">
+            <img src="images/lolpromo.png" alt="Promo Voucher">
+            <img src="images/promosteamsale.png" alt="Promo Voucher">
+        </div>
+    </header>
+
+    <main class="container">
+        <h2>🔥 Hot item Saat Ini</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="images/mobilelegends.jpg" alt="Mobile Legends">
+                <h3>Mobile Legends</h3>
+                <p>Top Up Diamonds</p>
+                <a href="mobilelegend.html" class="btn-buy">Beli Sekarang</a>
+            </div>
+            <div class="product-card">
+                <img src="images/freefire.jpg" alt="Free Fire">
+                <h3>Free Fire</h3>
+                <p>Top Up Diamonds</p>
+                <a href="freefire.html" class="btn-buy">Beli Sekarang</a>
+            </div>
+            <div class="product-card">
+                <img src="images/pubg.jpg" alt="PUBG Mobile">
+                <h3>PUBG Mobile</h3>
+                <p>Top Up UC</p>
+                <a href="./pubgmobile.html" class="btn-buy">Beli Sekarang</a>
+            </div>
+            <div class="product-card">
+                <img src="images/genshin.jpg" alt="Genshin Impact">
+                <h3>Genshin Impact</h3>
+                <p>Genesis Crystals</p>
+                <a href="genshin.html" class="btn-buy">Beli Sekarang</a>
+            </div>
+            <div class="product-card">
+                <img src="images/valorant.jpg" alt="Valorant">
+                <h3>Valorant</h3>
+                <p>Top Up Points</p>
+                <a href="valorant.html" class="btn-buy">Beli Sekarang</a>
+            </div>
+            <div class="product-card">
+                <img src="images/apexlegend.jpg" alt="Apex Legends">
+                <h3>Apex Legends</h3>
+                <p>Top Up Apex Coins</p>
+                <a href="apexlegend.html" class="btn-buy">Beli Sekarang</a>
+            </div>
+            <div class="product-card">
+                <img src="images/codm.jpg" alt="Call of Duty Mobile">
+                <h3>Call of Duty Mobile</h3>
+                <p>Top Up CP</p>
+                <a href="codm.html" class="btn-buy">Beli Sekarang</a>
+            </div>
+            <div class="product-card">
+                <img src="images/lol.jpg" alt="League of Legends">
+                <h3>League of Legends</h3>
+                <p>Top Up RP</p>
+                <a href="lol.html" class="btn-buy">Beli Sekarang</a>
+            </div>
+            <div class="product-card">
+                <img src="images/steam.jpg" alt="Steam">
+                <h3>Steam</h3>
+                <p>Top Up Steam Wallet</p>
+                <a href="steam.html" class="btn-buy">Beli Sekarang</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 DragonGameZone Indonesia. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Saat halaman dimuat, cek status session ke server Node.js
+        document.addEventListener("DOMContentLoaded", function () {
+            // Promo Banner Slider (Slide In/Out)
+            let currentPromoIdx = 0;
+            const totalImages = 3;
+            const promoSlider = document.getElementById('promoSlider');
+            
+            if (promoSlider) {
+                setInterval(() => {
+                    currentPromoIdx = (currentPromoIdx + 1) % totalImages;
+                    promoSlider.style.transform = `translateX(-${currentPromoIdx * 100}%)`;
+                }, 6000); // Slide every 6 seconds
+            }
+
+            fetch('/api/check-session')
+                .then(response => response.json())
+                .then(data => {
+                    const authButtons = document.querySelector('.auth-buttons');
+                    
+                    if (data.loggedIn) {
+                        // Jika sudah login, ganti tombol dengan Nama User & Logout
+                        authButtons.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <span style="font-weight: bold; color: #2f3542;">👋 Halo, ${data.nama}</span>
+                                <button id="btnLogout" style="background-color: #ff4757; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold;">Log out</button>
+                            </div>
+                        `;
+
+                        // Fungsi tombol logout
+                        document.getElementById('btnLogout').addEventListener('click', function() {
+                            fetch('/api/logout')
+                                .then(res => res.json())
+                                .then(result => {
+                                    if(result.status === 'success') {
+                                        alert('Berhasil keluar!');
+                                        window.location.reload(); // Refresh halaman
+                                    }
+                                });
+                        });
+                    }
+                });
+        });
+    </script>
+</body>
+</html>
