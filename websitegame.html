@@ -10,7 +10,7 @@
     <nav class="navbar">
         <div class="logo">DragonGameZone</div>
         <div class="search-bar">
-            <input type="text" placeholder="Cari game favoritmu...">
+            <input type="text" id="searchInput" placeholder="Cari game favoritmu...">
         </div>
         
         <div class="auth-buttons">
@@ -104,6 +104,25 @@
                     currentPromoIdx = (currentPromoIdx + 1) % totalImages;
                     promoSlider.style.transform = `translateX(-${currentPromoIdx * 100}%)`;
                 }, 6000); // Slide every 6 seconds
+            }
+
+            // Search Engine Feature
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const query = this.value.toLowerCase();
+                    const productCards = document.querySelectorAll('.product-card');
+
+                    productCards.forEach(card => {
+                        // Ambil nama game dari elemen <h3> di dalam kartu
+                        const gameName = card.querySelector('h3').textContent.toLowerCase();
+                        if (gameName.includes(query)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
             }
 
             fetch('/api/check-session')
