@@ -91,6 +91,14 @@
             
             <div class="checkout-box">
                 <div class="checkout-row">
+                    <span>Data Akun 1</span>
+                    <span id="displayInput1" style="font-weight: bold;">-</span>
+                </div>
+                <div class="checkout-row" id="rowInput2" style="display: none;">
+                    <span>Data Akun 2</span>
+                    <span id="displayInput2" style="font-weight: bold;">-</span>
+                </div>
+                <div class="checkout-row">
                     <span>Metode Pembayaran</span>
                     <div class="method-display" id="displayMethod">
                         <!-- Logo & Nama Metode Muncul di Sini -->
@@ -110,16 +118,24 @@
                     // Ambil data dari localStorage yang disimpan dari halaman game
                     const totalAmount = localStorage.getItem('checkout_amount') || 'Rp 0';
                     const paymentMethod = localStorage.getItem('checkout_method') || '';
+                    const inputUser1 = localStorage.getItem('checkout_input1') || '-';
+                    const inputUser2 = localStorage.getItem('checkout_input2') || '';
 
-                    // Tampilkan Total Tagihan
+                    // Tampilkan Data Tagihan
                     document.getElementById('displayAmount').innerText = totalAmount;
+                    document.getElementById('displayInput1').innerText = inputUser1;
+                    
+                    if (inputUser2 && inputUser2 !== '-') {
+                        document.getElementById('rowInput2').style.display = 'flex';
+                        document.getElementById('displayInput2').innerText = inputUser2;
+                    }
 
-                    // Tampilkan Metode Pembayaran & Logo
+                    // Tampilkan Metode Pembayaran & Logo (Gopay dengan huruf G besar untuk mencegah error Vercel)
                     const displayMethodContainer = document.getElementById('displayMethod');
                     if (paymentMethod) {
                         let logoSrc = '';
                         if (paymentMethod.toLowerCase() === 'dana') logoSrc = 'images/dana-logo.png';
-                        else if (paymentMethod.toLowerCase() === 'gopay') logoSrc = 'images/gopay.png';
+                        else if (paymentMethod.toLowerCase() === 'gopay') logoSrc = 'images/Gopay.png'; // G besar
                         else if (paymentMethod.toLowerCase() === 'ovo') logoSrc = 'images/ovo.png';
 
                         if (logoSrc) {
@@ -133,8 +149,8 @@
 
                     // Logika Eksekusi Pembayaran
                     document.getElementById('btnPay').addEventListener('click', function() {
-                        if (!paymentMethod) {
-                            alert("Metode pembayaran tidak valid. Silakan kembali ke halaman game.");
+                        if (!paymentMethod || totalAmount === 'Rp 0') {
+                            alert("Metode pembayaran atau nominal tidak valid. Silakan kembali ke halaman game.");
                             return;
                         }
 
@@ -144,7 +160,9 @@
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 total_amount: totalAmount,
-                                metode_pembayaran: paymentMethod
+                                metode_pembayaran: paymentMethod,
+                                input_user1: inputUser1,
+                                input_user2: inputUser2
                             })
                         })
                         .then(res => res.json())
@@ -153,10 +171,12 @@
                                 alert("Pembayaran Berhasil! Transaksi telah disimpan.");
                                 localStorage.removeItem('checkout_amount');
                                 localStorage.removeItem('checkout_method');
+                                localStorage.removeItem('checkout_input1');
+                                localStorage.removeItem('checkout_input2');
                                 window.location.href = 'websitegame.html'; 
                             } else {
                                 alert("Gagal memproses transaksi: " + data.message);
-                                if (data.message.toLowerCase().includes("login")) {
+                                if (data.message && data.message.toLowerCase().includes("login")) {
                                     window.location.href = 'login.html';
                                 }
                             }

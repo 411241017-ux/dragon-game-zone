@@ -137,15 +137,50 @@
             // Checkout Logic
             const btnCheckout = document.querySelector('.btn-checkout');
             if(btnCheckout) {
+                // Bersihkan sesi sebelumnya
+                localStorage.removeItem('checkout_amount');
+                localStorage.removeItem('checkout_method');
+                localStorage.removeItem('checkout_input1');
+                localStorage.removeItem('checkout_input2');
+
                 btnCheckout.addEventListener('click', function() {
+                    const checkoutAmount = localStorage.getItem('checkout_amount');
+                    if (!checkoutAmount) {
+                        alert('Pilih nominal!');
+                        return;
+                    }
+
                     const selectMethod = document.getElementById('paymentMethod');
                     if (selectMethod && !selectMethod.value) {
                         alert('Silakan pilih metode pembayaran terlebih dahulu!');
                         return;
                     }
+
+                    // Ambil data dari .input-group (bisa 1 atau 2 input tergantung gamenya)
+                    const accountInputs = document.querySelectorAll('.input-group input, .input-group select');
+                    let input1 = '';
+                    let input2 = '';
+                    
+                    if (accountInputs.length > 0) {
+                        input1 = accountInputs[0].value.trim();
+                        if (!input1) {
+                            alert('Mohon lengkapi Data Akun!');
+                            return;
+                        }
+                    }
+                    if (accountInputs.length > 1) {
+                        input2 = accountInputs[1].value.trim();
+                        if (!input2) {
+                            alert('Mohon lengkapi Data Akun!');
+                            return;
+                        }
+                    }
+
                     if (selectMethod) {
                         localStorage.setItem('checkout_method', selectMethod.value);
                     }
+                    localStorage.setItem('checkout_input1', input1);
+                    localStorage.setItem('checkout_input2', input2);
 
                     if (isLoggedIn) {
                         window.location.href = 'payment.html';

@@ -125,12 +125,11 @@ app.post('/api/transaksi', (req, res) => {
         return res.status(401).json({ status: 'error', message: 'Unauthorized. Harap login terlebih dahulu.' });
     }
 
-    const { total_amount, metode_pembayaran } = req.body;
+    const { total_amount, metode_pembayaran, input_user1, input_user2 } = req.body;
     const id_user = req.session.id_user;
-    const nama_user = req.session.nama_user;
     
-    const query = 'INSERT INTO transaksi (id_user, nama_user, total_amount, metode_pembayaran, status) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [id_user, nama_user, total_amount, metode_pembayaran, 'Berhasil'], (err, result) => {
+    const query = 'INSERT INTO transaksi (id_user, input_user1, input_user2, total_amount, metode_pembayaran, status) VALUES (?, ?, ?, ?, ?, ?)';
+    db.query(query, [id_user, input_user1, input_user2, total_amount, metode_pembayaran, 'Berhasil'], (err, result) => {
         if (err) return res.status(500).json({ status: 'error', message: err.message || err.code || String(err) });
         
         res.json({ status: 'success', message: 'Transaksi berhasil disimpan!' });
