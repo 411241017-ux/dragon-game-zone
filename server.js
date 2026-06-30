@@ -135,8 +135,11 @@ app.post('/api/transaksi', (req, res) => {
         const { total_amount, metode_pembayaran, input_user1, input_user2, id_produk } = req.body;
         const id_user = decoded.id_user;
         
+        // Bersihkan string 'Rp ' dan titik (misal 'Rp 79.000' -> 79000) agar sesuai dengan tipe INT di database
+        const parsedAmount = parseInt(String(total_amount).replace(/[^0-9]/g, ''), 10) || 0;
+        
         const query = 'INSERT INTO transaksi (id_user, id_produk, input_user1, input_user2, total_amount, metode_pembayaran, status) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        db.query(query, [id_user, id_produk || null, input_user1, input_user2, total_amount, metode_pembayaran, 'Berhasil'], (err, result) => {
+        db.query(query, [id_user, id_produk || null, input_user1, input_user2, parsedAmount, metode_pembayaran, 'Berhasil'], (err, result) => {
             if (err) return res.status(500).json({ status: 'error', message: err.message || err.code || String(err) });
             
             res.json({ status: 'success', message: 'Transaksi berhasil disimpan!' });
