@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran - DragonGameZone</title>
+    <link rel="stylesheet" href="./websitegame.css">
+    <style>
+        .auth-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+        .auth-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+        }
+        .auth-container h2 {
+            text-align: center;
+            color: #ff4757;
+            margin-bottom: 5px;
+        }
+        .auth-container p.subtitle {
+            text-align: center;
+            color: #747d8c;
+            margin-bottom: 25px;
+        }
+        .checkout-box {
+            background-color: #f1f2f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .checkout-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #2f3542;
+        }
+        .checkout-row.total {
+            font-weight: bold;
+            font-size: 18px;
+            border-top: 1px solid #dfe4ea;
+            padding-top: 15px;
+            margin-bottom: 0;
+        }
+        .method-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+        .method-display img {
+            max-height: 25px;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: #ff2a3f;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="websitegame.html" style="text-decoration: none; color: inherit;">DragonGameZone</a>
+        </div>
+    </nav>
+
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <h2>Checkout Pembayaran</h2>
+            <p class="subtitle">Selesaikan transaksi Anda</p>
+            
+            <div class="checkout-box">
+                <div class="checkout-row">
+                    <span>Metode Pembayaran</span>
+                    <div class="method-display" id="displayMethod">
+                        <!-- Logo & Nama Metode Muncul di Sini -->
+                        <span id="methodName">-</span>
+                    </div>
+                </div>
+                <div class="checkout-row total">
+                    <span>Total Tagihan</span>
+                    <span id="displayAmount">Rp 0</span>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" id="btnPay">Konfirmasi & Bayar Sekarang</button>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Ambil data dari localStorage yang disimpan dari halaman game
+                    const totalAmount = localStorage.getItem('checkout_amount') || 'Rp 0';
+                    const paymentMethod = localStorage.getItem('checkout_method') || '';
+
+                    // Tampilkan Total Tagihan
+                    document.getElementById('displayAmount').innerText = totalAmount;
+
+                    // Tampilkan Metode Pembayaran & Logo
+                    const displayMethodContainer = document.getElementById('displayMethod');
+                    if (paymentMethod) {
+                        let logoSrc = '';
+                        if (paymentMethod.toLowerCase() === 'dana') logoSrc = 'images/dana-logo.png';
+                        else if (paymentMethod.toLowerCase() === 'gopay') logoSrc = 'images/gopay.png';
+                        else if (paymentMethod.toLowerCase() === 'ovo') logoSrc = 'images/ovo.png';
+
+                        if (logoSrc) {
+                            displayMethodContainer.innerHTML = `<img src="${logoSrc}" alt="${paymentMethod}"> <span>${paymentMethod}</span>`;
+                        } else {
+                            displayMethodContainer.innerHTML = `<span>${paymentMethod}</span>`;
+                        }
+                    } else {
+                        displayMethodContainer.innerHTML = `<span style="color:red;">Belum dipilih</span>`;
+                    }
+
+                    // Logika Eksekusi Pembayaran
+                    document.getElementById('btnPay').addEventListener('click', function() {
+                        if (!paymentMethod) {
+                            alert("Metode pembayaran tidak valid. Silakan kembali ke halaman game.");
+                            return;
+                        }
+
+                        // Kirim ke server
+                        fetch('/api/transaksi', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                total_amount: totalAmount,
+                                metode_pembayaran: paymentMethod
+                            })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                alert("Pembayaran Berhasil! Transaksi telah disimpan.");
+                                localStorage.removeItem('checkout_amount');
+                                localStorage.removeItem('checkout_method');
+                                window.location.href = 'websitegame.html'; 
+                            } else {
+                                alert("Gagal memproses transaksi: " + data.message);
+                                if (data.message.toLowerCase().includes("login")) {
+                                    window.location.href = 'login.html';
+                                }
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            // Terjadi kesalahan sistem biasanya karena server belum direstart
+                            alert("Terjadi kesalahan sistem! Pastikan Server Node.js (server.js) sudah di-restart.");
+                        });
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</body>
+</html>

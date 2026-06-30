@@ -143,11 +143,11 @@
                 <div class="step-card">
                     <div class="step-number">3</div>
                     <h3>Metode Pembayaran</h3>
-                    <select style="width: 100%; margin-top: 15px;">
+                    <select id="paymentMethod" style="width: 100%; margin-top: 15px;">
                         <option value="">Pilih Metode Pembayaran</option>
-                        <option value="dana">DANA</option>
-                        <option value="gopay">GoPay</option>
-                        <option value="bca">BCA Virtual Account</option>
+                        <option value="DANA">DANA</option>
+                        <option value="GoPay">GoPay</option>
+                        <option value="OVO">OVO</option>
                     </select>
                     <button class="btn-checkout" style="margin-top: 20px;">Bayar Sekarang</button>
                 </div>
@@ -162,11 +162,13 @@
     <script>
         // Saat halaman dimuat, cek status session ke server Node.js
         document.addEventListener("DOMContentLoaded", function () {
+            let isLoggedIn = false;
             fetch('/api/check-session')
                 .then(response => response.json())
                 .then(data => {
                     const authButtons = document.querySelector('.auth-buttons');
                     
+                    isLoggedIn = data.loggedIn;
                     if (data.loggedIn && authButtons) {
                         // Jika sudah login, ganti tombol dengan Nama User & Logout
                         authButtons.innerHTML = `
@@ -189,6 +191,42 @@
                         });
                     }
                 });
+
+            // Checkout Logic
+            const btnCheckout = document.querySelector('.btn-checkout');
+            if(btnCheckout) {
+                btnCheckout.addEventListener('click', function() {
+                    const selectMethod = document.getElementById('paymentMethod');
+                    if (selectMethod && !selectMethod.value) {
+                        alert('Silakan pilih metode pembayaran terlebih dahulu!');
+                        return;
+                    }
+                    if (selectMethod) {
+                        localStorage.setItem('checkout_method', selectMethod.value);
+                    }
+
+                    if (isLoggedIn) {
+                        window.location.href = 'payment.html';
+                    } else {
+                        alert('Silakan login terlebih dahulu untuk melakukan pembayaran!');
+                        window.location.href = 'login.html';
+                    }
+                });
+            }
+
+            // Item selection logic
+            const itemOptions = document.querySelectorAll('.item-option');
+            itemOptions.forEach(option => {
+                option.style.cursor = 'pointer';
+                option.addEventListener('click', function() {
+                    itemOptions.forEach(opt => opt.style.border = '1px solid #ddd');
+                    this.style.border = '2px solid #2f3542';
+                    const priceElement = this.querySelector('small');
+                    if (priceElement) {
+                        localStorage.setItem('checkout_amount', priceElement.innerText);
+                    }
+                });
+            });
         });
     </script>
 </body>

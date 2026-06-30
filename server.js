@@ -54,7 +54,7 @@ app.post('/api/register', async (req, res) => {
 
     // Cek apakah email sudah terdaftar
     db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-        if (err) return res.status(500).json({ status: 'error', message: err.message });
+        if (err) return res.status(500).json({ status: 'error', message: err.message || err.code || String(err) });
         if (results.length > 0) {
             return res.status(400).json({ status: 'error', message: 'Email sudah terdaftar!' });
         }
@@ -64,11 +64,12 @@ app.post('/api/register', async (req, res) => {
 
         // Simpan ke database
         db.query('INSERT INTO users (nama, email, password) VALUES (?, ?, ?)', [nama, email, hashedPassword], (err, result) => {
-            if (err) return res.status(500).json({ status: 'error', message: err.message });
+            if (err) return res.status(500).json({ status: 'error', message: err.message || err.code || String(err) });
             
             // Otomatis login setelah berhasil daftar
             req.session.login = true;
             req.session.nama_user = nama;
+            req.session.id_user = result.insertId;
 
             res.json({ status: 'success', message: 'Registrasi berhasil! Mengalihkan ke halaman utama...' });
         });
@@ -80,7 +81,7 @@ app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
 
     db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-        if (err) return res.status(500).json({ status: 'error', message: err.message });
+        if (err) return res.status(500).json({ status: 'error', message: err.message || err.code || String(err) });
         if (results.length === 0) {
             return res.status(400).json({ status: 'error', message: 'Email tidak ditemukan!' });
         }
@@ -95,6 +96,7 @@ app.post('/api/login', (req, res) => {
         // Set data session jika berhasil login
         req.session.login = true;
         req.session.nama_user = user.nama;
+        req.session.id_user = user.id;
 
         res.json({ status: 'success', message: `Selamat datang, ${user.nama}!` });
     });
@@ -103,7 +105,7 @@ app.post('/api/login', (req, res) => {
 // 4. CEK STATUS LOGIN USER (Dipakai di halaman utama)
 app.get('/api/check-session', (req, res) => {
     if (req.session.login) {
-        res.json({ loggedIn: true, nama: req.session.nama_user });
+        res.json({ loggedIn: true, nama: req.session.nama_user, id_user: req.session.id_user });
     } else {
         res.json({ loggedIn: false });
     }
@@ -117,14 +119,32 @@ app.get('/api/logout', (req, res) => {
     });
 });
 
-// 6. TEST KONEKSI DATABASE (Untuk Debugging)
+// 6. PROSES TRANSAKSI
+app.post('/api/transaksi', (req, res) => {
+    if (!req.session.login) {
+        return res.status(401).json({ status: 'error', message: 'Unauthorized. Harap login terlebih dahulu.' });
+    }
+
+    const { total_amount, metode_pembayaran } = req.body;
+    const id_user = req.session.id_user;
+    const nama_user = req.session.nama_user;
+    
+    const query = 'INSERT INTO transaksi (id_user, nama_user, total_amount, metode_pembayaran, status) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [id_user, nama_user, total_amount, metode_pembayaran, 'Berhasil'], (err, result) => {
+        if (err) return res.status(500).json({ status: 'error', message: err.message || err.code || String(err) });
+        
+        res.json({ status: 'success', message: 'Transaksi berhasil disimpan!' });
+    });
+});
+
+// 7. TEST KONEKSI DATABASE (Untuk Debugging)
 app.get('/api/test-db', (req, res) => {
     db.query('SELECT 1 + 1 AS solution', (err, results) => {
         if (err) {
             return res.json({ 
                 status: 'error', 
                 message: 'Koneksi gagal!', 
-                detail_error: err.message 
+                detail_error: err.message || err.code || String(err) 
             });
         }
         res.json({ 
