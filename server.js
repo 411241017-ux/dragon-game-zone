@@ -109,6 +109,7 @@ app.post('/api/login', (req, res) => {
 
 // 4. CEK STATUS LOGIN USER (Menggunakan JWT Cookie)
 app.get('/api/check-session', (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     const token = req.cookies.token;
     if (!token) return res.json({ loggedIn: false });
 
@@ -120,6 +121,7 @@ app.get('/api/check-session', (req, res) => {
 
 // 5. PROSES LOGOUT
 app.get('/api/logout', (req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     res.cookie('token', '', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
