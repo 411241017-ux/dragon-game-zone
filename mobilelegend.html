@@ -135,7 +135,7 @@
 
                         // Fungsi tombol logout
                         document.getElementById('btnLogout').addEventListener('click', function() {
-                            fetch('/api/logout')
+                            fetch('/api/logout', { method: 'POST' })
                                 .then(res => res.json())
                                 .then(result => {
                                     if(result.status === 'success') {

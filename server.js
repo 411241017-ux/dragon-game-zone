@@ -120,7 +120,7 @@ app.get('/api/check-session', (req, res) => {
 });
 
 // 5. PROSES LOGOUT
-app.get('/api/logout', (req, res) => {
+app.post('/api/logout', (req, res) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     res.cookie('token', '', {
         httpOnly: true,
