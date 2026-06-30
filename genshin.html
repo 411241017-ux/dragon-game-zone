@@ -49,31 +49,31 @@
                     <div class="step-number">2</div>
                     <h3>Pilih Nominal Points</h3>
                     <div class="item-grid">
-                        <div class="item-option">
+                        <div class="item-option" data-id="8">
                             <img src="images/genshinmoon.png" alt="475 VP">
                             <span>Blessing of the Welkin Moon</span><small>Rp 79.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="9">
                             <img src="images/genshincrystal.png" alt="2525 VP">
                             <span>60 Genesis Crystals</span><small>Rp 16.500</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="10">
                             <img src="images/genshincrystal.png" alt="3050 VP">
                             <span>300 Genesis Crystals</span><small>Rp 79.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="11">
                             <img src="images/genshincrystal.png" alt="3650 VP">
                             <span>980 Genesis Crystals</span><small>Rp 249.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="12">
                             <img src="images/genshincrystal.png" alt="4125 VP">
                             <span>1980 Genesis Crystals</span><small>Rp 510.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="13">
                             <img src="images/genshincrystal.png" alt="4650 VP">
                             <span>3280 Genesis Crystals</span><small>Rp 790.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="14">
                             <img src="images/genshincrystal.png" alt="5350 VP">
                             <span>6480 Genesis Crystals</span><small>Rp 1.700.000</small>
                         </div>
@@ -155,6 +155,7 @@
                 localStorage.removeItem('checkout_method');
                 localStorage.removeItem('checkout_input1');
                 localStorage.removeItem('checkout_input2');
+                localStorage.removeItem('checkout_id_produk');
 
                 btnCheckout.addEventListener('click', function() {
                     const checkoutAmount = localStorage.getItem('checkout_amount');
@@ -214,6 +215,7 @@
                     const priceElement = this.querySelector('small');
                     if (priceElement) {
                         localStorage.setItem('checkout_amount', priceElement.innerText);
+                        localStorage.setItem('checkout_id_produk', this.getAttribute('data-id'));
                     }
                 });
             });

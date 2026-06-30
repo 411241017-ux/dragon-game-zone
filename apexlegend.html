@@ -41,27 +41,27 @@
                     <div class="step-number">2</div>
                     <h3>Pilih Nominal Apex Coins</h3>
                     <div class="item-grid">
-                        <div class="item-option">
+                        <div class="item-option" data-id="57">
                             <img src="images/apexcoin.png" alt="1000 AC">
                             <span>1000 Apex Coins</span>
                             <small>Rp 150.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="58">
                             <img src="images/apexcoin.png" alt="2150 AC">
                             <span>2150 Apex Coins</span>
                             <small>Rp 300.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="59">
                             <img src="images/apexcoin.png" alt="4350 AC">
                             <span>4350 Apex Coins</span>
                             <small>Rp 600.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="60">
                             <img src="images/apexcoin.png" alt="6700 AC">
                             <span>6700 Apex Coins</span>
                             <small>Rp 900.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="61">
                             <img src="images/apexcoin.png" alt="11500 AC">
                             <span>11500 Apex Coins</span>
                             <small>Rp 1.500.000</small>
@@ -144,6 +144,7 @@
                 localStorage.removeItem('checkout_method');
                 localStorage.removeItem('checkout_input1');
                 localStorage.removeItem('checkout_input2');
+                localStorage.removeItem('checkout_id_produk');
 
                 btnCheckout.addEventListener('click', function() {
                     const checkoutAmount = localStorage.getItem('checkout_amount');
@@ -203,6 +204,7 @@
                     const priceElement = this.querySelector('small');
                     if (priceElement) {
                         localStorage.setItem('checkout_amount', priceElement.innerText);
+                        localStorage.setItem('checkout_id_produk', this.getAttribute('data-id'));
                     }
                 });
             });

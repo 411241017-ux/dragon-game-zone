@@ -42,96 +42,96 @@
                     <div class="step-number">2</div>
                     <h3>Pilih Nominal Points</h3>
                     <div class="item-grid">
-                        <div class="item-option">
+                        <div class="item-option" data-id="15">
                             <img src="images/valorantpoint.png" alt="475 VP">
                             <span>475 Points</span><small>Rp 48.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="16">
                             <img src="images/valorantpoint.png" alt="1000 VP">
                             <span>1000 Points</span><small>Rp 96.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="17">
                             <img src="images/valorantpoint.png" alt="1475 VP">
                             <span>1475 Points</span><small>Rp 145.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="18">
                             <img src="images/valorantpoint.png" alt="2050 VP">
                             <span>2050 Points</span><small>Rp 193.000</small>
                         </div>
 
-                        <div class="item-option">
+                        <div class="item-option" data-id="19">
                             <img src="images/valorantpoint.png" alt="2525 VP">
                             <span>2525 Points</span><small>Rp 242.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="20">
                             <img src="images/valorantpoint.png" alt="3050 VP">
                             <span>3050 Points</span><small>Rp 290.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="21">
                             <img src="images/valorantpoint.png" alt="3650 VP">
                             <span>3650 Points</span><small>Rp 336.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="22">
                             <img src="images/valorantpoint.png" alt="4125 VP">
                             <span>4125 Points</span><small>Rp 384.000</small>
                         </div>
 
-                        <div class="item-option">
+                        <div class="item-option" data-id="23">
                             <img src="images/valorantpoint.png" alt="4650 VP">
                             <span>4650 Points</span><small>Rp 433.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="24">
                             <img src="images/valorantpoint.png" alt="5350 VP">
                             <span>5350 Points</span><small>Rp 483.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="25">
                             <img src="images/valorantpoint.png" alt="5700 VP">
                             <span>5700 Points</span><small>Rp 530.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="26">
                             <img src="images/valorantpoint.png" alt="5825 VP">
                             <span>5825 Points</span><small>Rp 531.000</small>
                         </div>
 
-                        <div class="item-option">
+                        <div class="item-option" data-id="27">
                             <img src="images/valorantpoint.png" alt="6350 VP">
                             <span>6350 Points</span><small>Rp 580.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="28">
                             <img src="images/valorantpoint.png" alt="7400 VP">
                             <span>7400 Points</span><small>Rp 677.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="29">
                             <img src="images/valorantpoint.png" alt="9000 VP">
                             <span>9000 Points</span><small>Rp 820.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="30">
                             <img src="images/valorantpoint.png" alt="11000 VP">
                             <span>11000 Points</span><small>Rp 949.000</small>
                         </div>
 
-                        <div class="item-option">
+                        <div class="item-option" data-id="31">
                             <img src="images/valorantpoint.png" alt="11475 VP">
                             <span>11475 Points</span><small>Rp 999.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="32">
                             <img src="images/valorantpoint.png" alt="12000 VP">
                             <span>12000 Points</span><small>Rp 1.047K</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="33">
                             <img src="images/valorantpoint.png" alt="13050 VP">
                             <span>13050 Points</span><small>Rp 1.144K</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="34">
                             <img src="images/valorantpoint.png" alt="14650 VP">
                             <span>14650 Points</span><small>Rp 1.287K</small>
                         </div>
 
-                        <div class="item-option">
+                        <div class="item-option" data-id="35">
                             <img src="images/valorantpoint.png" alt="16350 VP">
                             <span>16350 Points</span><small>Rp 1.434K</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="36">
                             <img src="images/valorantpoint.png" alt="22000 VP">
                             <span>22000 Points</span><small>Rp 1.901K</small>
                         </div>
@@ -213,6 +213,7 @@
                 localStorage.removeItem('checkout_method');
                 localStorage.removeItem('checkout_input1');
                 localStorage.removeItem('checkout_input2');
+                localStorage.removeItem('checkout_id_produk');
 
                 btnCheckout.addEventListener('click', function() {
                     const checkoutAmount = localStorage.getItem('checkout_amount');
@@ -272,6 +273,7 @@
                     const priceElement = this.querySelector('small');
                     if (priceElement) {
                         localStorage.setItem('checkout_amount', priceElement.innerText);
+                        localStorage.setItem('checkout_id_produk', this.getAttribute('data-id'));
                     }
                 });
             });

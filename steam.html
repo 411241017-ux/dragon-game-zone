@@ -41,32 +41,32 @@
                     <div class="step-number">2</div>
                     <h3>Pilih Nominal Wallet</h3>
                     <div class="item-grid">
-                        <div class="item-option">
+                        <div class="item-option" data-id="62">
                             <img src="images/steam.jpg" alt="12K">
                             <span>IDR 12,000 Wallet</span>
                             <small>Rp 15.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="63">
                             <img src="images/steam.jpg" alt="45K">
                             <span>IDR 45,000 Wallet</span>
                             <small>Rp 58.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="64">
                             <img src="images/steam.jpg" alt="90K">
                             <span>IDR 90,000 Wallet</span>
                             <small>Rp 115.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="65">
                             <img src="images/steam.jpg" alt="250K">
                             <span>IDR 250,000 Wallet</span>
                             <small>Rp 310.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="66">
                             <img src="images/steam.jpg" alt="400K">
                             <span>IDR 400,000 Wallet</span>
                             <small>Rp 490.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="67">
                             <img src="images/steam.jpg" alt="600K">
                             <span>IDR 600,000 Wallet</span>
                             <small>Rp 735.000</small>
@@ -149,6 +149,7 @@
                 localStorage.removeItem('checkout_method');
                 localStorage.removeItem('checkout_input1');
                 localStorage.removeItem('checkout_input2');
+                localStorage.removeItem('checkout_id_produk');
 
                 btnCheckout.addEventListener('click', function() {
                     const checkoutAmount = localStorage.getItem('checkout_amount');
@@ -208,6 +209,7 @@
                     const priceElement = this.querySelector('small');
                     if (priceElement) {
                         localStorage.setItem('checkout_amount', priceElement.innerText);
+                        localStorage.setItem('checkout_id_produk', this.getAttribute('data-id'));
                     }
                 });
             });

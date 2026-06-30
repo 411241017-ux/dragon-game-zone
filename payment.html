@@ -120,6 +120,7 @@
                     const paymentMethod = localStorage.getItem('checkout_method') || '';
                     const inputUser1 = localStorage.getItem('checkout_input1') || '-';
                     const inputUser2 = localStorage.getItem('checkout_input2') || '';
+                    const idProduk = localStorage.getItem('checkout_id_produk') || null;
 
                     // Tampilkan Data Tagihan
                     document.getElementById('displayAmount').innerText = totalAmount;
@@ -162,7 +163,8 @@
                                 total_amount: totalAmount,
                                 metode_pembayaran: paymentMethod,
                                 input_user1: inputUser1,
-                                input_user2: inputUser2
+                                input_user2: inputUser2,
+                                id_produk: idProduk
                             })
                         })
                         .then(res => res.json())
@@ -173,6 +175,7 @@
                                 localStorage.removeItem('checkout_method');
                                 localStorage.removeItem('checkout_input1');
                                 localStorage.removeItem('checkout_input2');
+                                localStorage.removeItem('checkout_id_produk');
                                 window.location.href = 'websitegame.html'; 
                             } else {
                                 alert("Gagal memproses transaksi: " + data.message);

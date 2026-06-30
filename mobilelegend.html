@@ -42,37 +42,37 @@
                     <div class="step-number">2</div>
                     <h3>Pilih Nominal Diamonds</h3>
                     <div class="item-grid">
-                        <div class="item-option">
+                        <div class="item-option" data-id="1">
                             <img src="images/diamondml.png" alt="5 Dm">
                             <span>5 Diamonds</span>
                             <small>Rp 1.500</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="2">
                             <img src="images/diamondml.png" alt="11 Dm">
                             <span>11 Diamonds</span>
                             <small>Rp 3.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="3">
                             <img src="images/diamondml.png" alt="50 Dm">
                             <span>50 Diamonds</span>
                             <small>Rp 14.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="4">
                             <img src="images/diamondml.png" alt="250 Dm">
                             <span>250 Diamonds</span>
                             <small>Rp 70.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="5">
                             <img src="images/diamondml.png" alt="500 Dm">
                             <span>500 Diamonds</span>
                             <small>Rp 140.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="6">
                             <img src="images/diamondml.png" alt="1000 Dm">
                             <span>1000 Diamonds</span>
                             <small>Rp 280.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="7">
                             <img src="images/diamondml.png" alt="5000 Dm">
                             <span>5000 Diamonds</span>
                             <small>Rp 1.400.000</small>
@@ -155,6 +155,7 @@
                 localStorage.removeItem('checkout_method');
                 localStorage.removeItem('checkout_input1');
                 localStorage.removeItem('checkout_input2');
+                localStorage.removeItem('checkout_id_produk');
 
                 btnCheckout.addEventListener('click', function() {
                     const checkoutAmount = localStorage.getItem('checkout_amount');
@@ -214,6 +215,7 @@
                     const priceElement = this.querySelector('small');
                     if (priceElement) {
                         localStorage.setItem('checkout_amount', priceElement.innerText);
+                        localStorage.setItem('checkout_id_produk', this.getAttribute('data-id'));
                     }
                 });
             });

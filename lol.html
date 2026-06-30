@@ -41,32 +41,32 @@
                     <div class="step-number">2</div>
                     <h3>Pilih Nominal RP</h3>
                     <div class="item-grid">
-                        <div class="item-option">
+                        <div class="item-option" data-id="45">
                             <img src="images/lolrp.png" alt="575 RP">
                             <span>575 RP</span>
                             <small>Rp 50.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="46">
                             <img src="images/lolrp.png" alt="1380 RP">
                             <span>1380 RP</span>
                             <small>Rp 120.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="47">
                             <img src="images/lolrp.png" alt="2800 RP">
                             <span>2800 RP</span>
                             <small>Rp 240.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="48">
                             <img src="images/lolrp.png" alt="5000 RP">
                             <span>5000 RP</span>
                             <small>Rp 400.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="49">
                             <img src="images/lolrp.png" alt="7200 RP">
                             <span>7200 RP</span>
                             <small>Rp 560.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="50">
                             <img src="images/lolrp.png" alt="13500 RP">
                             <span>13500 RP</span>
                             <small>Rp 1.000.000</small>
@@ -149,6 +149,7 @@
                 localStorage.removeItem('checkout_method');
                 localStorage.removeItem('checkout_input1');
                 localStorage.removeItem('checkout_input2');
+                localStorage.removeItem('checkout_id_produk');
 
                 btnCheckout.addEventListener('click', function() {
                     const checkoutAmount = localStorage.getItem('checkout_amount');
@@ -208,6 +209,7 @@
                     const priceElement = this.querySelector('small');
                     if (priceElement) {
                         localStorage.setItem('checkout_amount', priceElement.innerText);
+                        localStorage.setItem('checkout_id_produk', this.getAttribute('data-id'));
                     }
                 });
             });

@@ -42,22 +42,22 @@
                     <div class="step-number">2</div>
                     <h3>Pilih Nominal UC</h3>
                     <div class="item-grid">
-                        <div class="item-option">
+                        <div class="item-option" data-id="41">
                             <img src="images/pubguc.png" alt="60 UC">
                             <span>60 UC</span>
                             <small>Rp 15.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="42">
                             <img src="images/pubguc.png" alt="325 UC">
                             <span>325 UC</span>
                             <small>Rp 75.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="43">
                             <img src="images/pubguc.png" alt="660 UC">
                             <span>660 UC</span>
                             <small>Rp 150.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="44">
                             <img src="images/pubguc.png" alt="1800 UC">
                             <span>1800 UC</span>
                             <small>Rp 400.000</small>
@@ -140,6 +140,7 @@
                 localStorage.removeItem('checkout_method');
                 localStorage.removeItem('checkout_input1');
                 localStorage.removeItem('checkout_input2');
+                localStorage.removeItem('checkout_id_produk');
 
                 btnCheckout.addEventListener('click', function() {
                     const checkoutAmount = localStorage.getItem('checkout_amount');
@@ -199,6 +200,7 @@
                     const priceElement = this.querySelector('small');
                     if (priceElement) {
                         localStorage.setItem('checkout_amount', priceElement.innerText);
+                        localStorage.setItem('checkout_id_produk', this.getAttribute('data-id'));
                     }
                 });
             });

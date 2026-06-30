@@ -41,32 +41,32 @@
                     <div class="step-number">2</div>
                     <h3>Pilih Nominal CP</h3>
                     <div class="item-grid">
-                        <div class="item-option">
+                        <div class="item-option" data-id="51">
                             <img src="images/codpoint.png" alt="80 CP">
                             <span>80 CP</span>
                             <small>Rp 15.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="52">
                             <img src="images/codpoint.png" alt="420 CP">
                             <span>420 CP</span>
                             <small>Rp 70.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="53">
                             <img src="images/codpoint.png" alt="880 CP">
                             <span>880 CP</span>
                             <small>Rp 140.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="54">
                             <img src="images/codpoint.png" alt="2400 CP">
                             <span>2400 CP</span>
                             <small>Rp 350.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="55">
                             <img src="images/codpoint.png" alt="5000 CP">
                             <span>5000 CP</span>
                             <small>Rp 700.000</small>
                         </div>
-                        <div class="item-option">
+                        <div class="item-option" data-id="56">
                             <img src="images/codpoint.png" alt="10800 CP">
                             <span>10800 CP</span>
                             <small>Rp 1.400.000</small>
@@ -149,6 +149,7 @@
                 localStorage.removeItem('checkout_method');
                 localStorage.removeItem('checkout_input1');
                 localStorage.removeItem('checkout_input2');
+                localStorage.removeItem('checkout_id_produk');
 
                 btnCheckout.addEventListener('click', function() {
                     const checkoutAmount = localStorage.getItem('checkout_amount');
@@ -208,6 +209,7 @@
                     const priceElement = this.querySelector('small');
                     if (priceElement) {
                         localStorage.setItem('checkout_amount', priceElement.innerText);
+                        localStorage.setItem('checkout_id_produk', this.getAttribute('data-id'));
                     }
                 });
             });
