@@ -120,10 +120,11 @@ app.get('/api/check-session', (req, res) => {
 
 // 5. PROSES LOGOUT
 app.get('/api/logout', (req, res) => {
-    res.clearCookie('token', {
+    res.cookie('token', '', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+        sameSite: 'strict',
+        expires: new Date(0)
     });
     res.json({ status: 'success' });
 });
