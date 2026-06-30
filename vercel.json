@@ -24,6 +24,10 @@
       "dest": "/server.js"
     },
     {
+      "src": "/",
+      "dest": "/websitegame.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }
