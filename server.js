@@ -112,6 +112,24 @@ app.get('/api/logout', (req, res) => {
     });
 });
 
+// 6. TEST KONEKSI DATABASE (Untuk Debugging)
+app.get('/api/test-db', (req, res) => {
+    db.query('SELECT 1 + 1 AS solution', (err, results) => {
+        if (err) {
+            return res.json({ 
+                status: 'error', 
+                message: 'Koneksi gagal!', 
+                detail_error: err.message 
+            });
+        }
+        res.json({ 
+            status: 'success', 
+            message: 'Database berhasil terhubung dengan Vercel!',
+            data: results
+        });
+    });
+});
+
 // Server berjalan di port 3000 jika dijalankan langsung
 if (require.main === module) {
     app.listen(3000, () => {
