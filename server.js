@@ -65,7 +65,12 @@ app.post('/api/register', async (req, res) => {
         // Simpan ke database
         db.query('INSERT INTO users (nama, email, password) VALUES (?, ?, ?)', [nama, email, hashedPassword], (err, result) => {
             if (err) return res.status(500).json({ status: 'error', message: err.message });
-            res.json({ status: 'success', message: 'Registrasi berhasil! Silakan login.' });
+            
+            // Otomatis login setelah berhasil daftar
+            req.session.login = true;
+            req.session.nama_user = nama;
+
+            res.json({ status: 'success', message: 'Registrasi berhasil! Mengalihkan ke halaman utama...' });
         });
     });
 });
