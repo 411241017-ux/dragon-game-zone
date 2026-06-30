@@ -137,5 +137,5 @@ if (require.main === module) {
     });
 }
 
-// Ekspor untuk testing
-module.exports = { app, db };
+// Ekspor untuk testing & Vercel
+module.exports = app;
