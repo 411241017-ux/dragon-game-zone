@@ -27,15 +27,19 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'websitegame.html'));
 });
 
-// 1. KONEKSI DATABASE (Menggunakan MySQL XAMPP)
+// 1. KONEKSI DATABASE (Menggunakan TiDB / Lingkungan Online)
 const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '', // default XAMPP kosong
-    database: 'dragon_game_zone',
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 3306,
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'dragon_game_zone',
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    ssl: {
+        rejectUnauthorized: true // Diwajibkan oleh TiDB Serverless
+    }
 });
 
 console.log('Terhubung ke database MySQL XAMPP! (Connection Pool aktif)');
